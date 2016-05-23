@@ -59,5 +59,11 @@ dos testes de um software. Sendo elas:
 
 Dessa maneira, a organização consegue aferir números sobre a confiabilidade
 da implementação dos testes a partida da aplicação dos resultados obtidos  \cite{e07}
+
 \section{Integração Contínua}
+Uma prática utilizada para eliminar descontinuidades entre o desenvolvimento e a implantação é a integração contínua \cite{roadmap}. A integração contínua é bastante utilizada atualmente devido ao avanço das metodologias ágeis, e consiste de uma prática na qual os desenvolvedores de software trabalham em pequenos incrementos, assim, eles contribuem com o código frequentemente e garantem que o projeto compile e passe a suíte de testes a qualquer momento \cite{opensource}.
+
+O uso da integração contínua apresenta várias vantagens, ela aumenta a frequência de lançamento de software, a previsibilidade, a produtividade do desenvolvedor, entre outros \cite{practice}.
+
+Sendo assim, ao utilizar essa prática, incrementos de software serão lançados com uma frequência alta. Diante disso, uma questão importante é sobre como validar tantos incrementos. Para resolver esse problema existem ferramentas que auxiliam a realização da integração contínua. O que é essencial para a automatização da integração contínua, é o uso de um repositório para o código, assim ferramentas como Git ou Subversion são úteis. Além disso, existem ferramentas analisam as novas mudanças de código enviadas, elas checam o código a fim de verificar se aquela mudança de código é boa e não "quebra"  nenhuma outra funcionalidade ou teste \cite{meyer}, nesse caso, ferramentas como Travis, Jenkins ou GitLab Ci auxiliam esse processo.
 
