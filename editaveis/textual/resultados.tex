@@ -1,6 +1,41 @@
 \chapter[Resultados Obtidos]{Resultados Obtidos}
 
 \section{Contagem dos Casos de Testes Implementados}
-Pela análise do documento apresentando no anexo XXXX, observou-se que  foram especificados 14 casos de testes. Desses 14 casos de teste, apenas 7 foram implementados. Diante disso, conclui-se que 50\% dos casos de testes foram contemplados com a implementação
-
 \label{sec:contagem-casos}
+Pela análise do documento apresentando no anexo XXXX, observou-se que  foram especificados 14 casos de testes. Desses 14 casos de teste, 9 casos foram implementados. Diante disso, conclui-se que 64,3\% dos casos de testes foram contemplados com a implementação. As listas a seguir apresentam quais casos de teste foram implementados e quais não foram implementados.
+
+\textbf{Casos de testes implementados}
+\begin{itemize}
+	\item Verificar se o sistema realiza a pesquisa por unidade de atendimento
+	\item Verificar se o sistema realiza a pesquisa por especialidade do médico.
+	\item Verificar o comportamento do sistema caso sejam passados dados inválidos.
+	\item Verificar o comportamento do sistema caso não seja passado nenhum parâmetro.
+	\item Verificar se o sistema cadastra um usuário.
+	\item Verificar se o sistema permite ao usuário modificar a senha.
+	\item Verificar se o usuário consegue fazer a avaliação do atendimento de um médico.
+	\item Verificar se é possível remover( administrador ) comentários feitos pelos usuários.
+	\item Verificar se o sistema gera relatórios sobre a quantidade de médicos por região.
+\end{itemize}
+
+\textbf{Casos de testes não implementados}
+\begin{itemize}
+	\item Verificar se o sistema realiza a pesquisa por nome do médico.
+	\item Verificar se o sistema realiza a pesquisa por data de trabalho do médico
+	\item Verificar se o sistema permite ao usuário recuperar a senha, recebendo um e-mail para a modificação da mesma
+	\item Verificar a impossibilidade do usuário criar várias contas com o mesmo e-mail. 
+	\item Verificar se os dados disponíveis no portal da transparência do DF estão sendo importados corretamente para o banco de dados do TEM-DF
+\end{itemize}
+
+\section{Melhorias na qualidade dos testes}
+Com os resultados obtidos a partir da contagem dos casos de testes implementados, foi possível iniciar as melhorias na qualidade dos testes. Assim, segundo o definido na seção~\ref{sec:qualidade-testes}, para aumentar a qualidade dos testes de software, aumentamos a quantidade de casos de testes implementados.
+
+Como descrito na seção~\ref{sec:contagem-casos}, 5 casos de testes não haviam sido implementados. Assim, a equipe despendeu esforço para implementar todos esses casos de testes. Porém, devido à complexidade de alguns casos de teste, e ao tempo disponível para a entrega do trabalho, não foi possível implementar todos os casos de teste. A lista a seguir, apresenta os casos de testes que foram implementados: 
+
+\textbf{Casos de testes implementados para melhoria}
+\begin{itemize}
+	\item Verificar se o sistema realiza a pesquisa por nome do médico.
+	\item Verificar se o sistema realiza a pesquisa por data de trabalho do médico
+	\item Verificar a impossibilidade do usuário criar várias contas com o mesmo e-mail. 
+\end{itemize}
+
+Diante disso, ao final do desenvolvimento do trabalho, 12 casos de teste foram implementados. Assim a porcentagem de casos de testes implementados passou de 64,3\% para 85,7\%
