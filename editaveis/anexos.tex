@@ -2,12 +2,103 @@
 
 \partanexos
 
-% \chapter{Primeiro Anexo}
+\chapter{Especificação dos casos de teste}
 
-% Texto do primeiro anexo.
+\begin{longtable}{p{4cm}>{-- }p{9cm}}
+  \caption{Caso de Teste 1 - Realizar Pesquisa}\label{tab:ct1} \\
+  \toprule
+  \noindent
+  CT-1                      & Realizar pesquisa \\ \midrule
+  Importância               & Alta\\ \midrule
+  Propósito                 & 1) Verificar se o sistema realiza a pesquisa por nome do médico.\\ 
+                            & 2) Verificar se o sistema realiza a pesquisa por data de trabalho do médico.\\
+                            & 3) Verificar se o sistema realiza a pesquisa por unidade de atendimento.\\
+                            & 4) Verificar se o sistema realiza a pesquisa por especialidade do médico.\\
+                            & 5) Verificar o comportamento do sistema caso sejam passados dados inválidos.\\
+                            & 6) Verificar o comportamento do sistema caso não seja passado nenhum parâmetro.\\ \midrule
+  Pré-condições             & Nenhuma\\ \midrule
+  Dados de entrada do teste & Nome do médico, data de trabalho do médico, unidade de atendimento do médico e especialidade do médico.\\ \midrule
+  Passos                    & 1) Usuário acessa o site do TEM-DF.\\
+  & 2) Usuário preenche os campos de pesquisa, que são os dados de entrada do teste.\\
+  & 3) Usuário clica no botão pesquisar.\\ \midrule
+  Resultados Esperados      & 1) Se encontrar resultados de pesquisa compatíveis com os dados de entrada, o sistema deve retornar o resultado para o usuário.\\
+  & 2) Se não encontrar resultados de pesquisa compatíveis com os dados de entrada, o sistema deve retornar ao usuário uma mensagem informando que não foi encontrado resultados para a pesquisa.\\
+  & 3) Se o usuário não colocar nenhum dado de entrada, o sistema deverá retornar todos os dados do banco de dados, usando uma paginação pertinente.\\ \midrule
+  Situações de Erros        & 1) Conexão interrompida com o servidor.\\ \midrule
+  Notas                     & NA                                     \\ \bottomrule
+\end{longtable}
 
-% \chapter{Segundo Anexo}
+\begin{longtable}{p{4cm}>{-- }p{9cm}}
+  \caption{Caso de Teste 2 - Manter Usuário}\label{tab:ct2} \\
+  \toprule
+  \noindent
+  CT-2                      & Manter Usuário \\ \midrule
+  Importância               & Média \\ \midrule
+  Propósito                 & 1) Verificar se o sistema cadastra um usuário.\\
+                            & 2) Verificar se o sistema permite ao usuário modificar a senha.\\
+                            & 3) Verificar se o sistema permite ao usuário recuperar a senha, recebendo um e-mail para a modificação da mesma.\\
+                            & 4) Verificar a impossibilidade do usuário criar várias contas com o mesmo e-mail.\\ \midrule
+  Pré-condições             & Nenhuma.\\ \midrule
+  Dados de entrada do teste & Nome do usuário, email do usuário.\\ \midrule
+  Passos                    & 1) Usuário clica em uma das opções: entrar( login ) ou cadastrar-se.\\ \midrule
+  Resultados Esperados      & 1) Caso o usuário já seja cadastrado e esteja fazendo login, o sistema deverá retornar a mesma página que o usuário estava, agora com o usuário logado.\\
+                            & 2) Caso o usuário não seja cadastrado, o sistema deverá retornar um formulário para ser preenchido. Após submetido o formulário, o sistema deverá cadastrar o usuário caso os dados sejam válidos.\\
+                            & 3) Caso os dados sejam incompatíveis, o sistema deverá retornar a mensagem: usuário ou senha errados.\\ \midrule
+  Situações de Erros        &                                 \\ \midrule
+  Notas                     & NA                              \\ \bottomrule
+\end{longtable}
 
-% Texto do segundo anexo.
+\begin{longtable}{p{4cm}>{-- }p{9cm}}
+  \caption{Caso de Teste 3 - Avaliar Médicos}\label{tab:ct3} \\
+  \toprule
+  \noindent
+  CT-3                      & Avaliar Médicos\\ \midrule
+  Importância               & Média \\ \midrule
+  Propósito                 & Verificar se o usuário consegue fazer a avaliação do atendimento de um médico.\\ \midrule
+  Pré-condições             & Usuário deve estar logado no sistema.\\ \midrule
+  Dados de entrada do teste & nome do médico, avaliação do usuário.\\ \midrule
+  Passos                    & 1)  O usuário faz login no sistema.\\
+                            & 2) O usuário pesquisa por um médico.\\
+                            & 3) O usuário escolhe a opção de avaliar o médico.\\
+                            & 4) O usuário avalia o médico.\\
+                            & 5) O usuário pode fazer um comentário ou não.\\
+                            & 6) A avaliação é submetida.\\ \midrule
+  Resultados Esperados      & Avaliação computada no perfil do médico.\\ \midrule
+  Situações de Erros        & Falha de conexão com a internet\\ \midrule
+  Notas                     & NA                              \\ \bottomrule
+\end{longtable}
+
+\begin{longtable}{p{4cm}>{-- }p{9cm}}
+  \caption{Caso de Teste 4 - Manter Médicos}\label{tab:ct4} \\
+  \toprule
+  \noindent
+  CT-4                      & Manter Médicos\\ \midrule
+  Importância               & Alta\\ \midrule
+  Propósito                 & Verificar se os dados disponíveis no portal da transparência do DF estão sendo importados corretamente para o banco de dados do TEM-DF\\ \midrule
+  Pré-condições             & Site do Portal da Transparência do DF estar disponível.\\ \midrule
+  Dados de entrada do teste & Arquivos CSV contendo informações sobre as escalas dos médicos importado do site do Portal da Transparência do DF.\\ \midrule
+  Passos                    & 1) Os dados do Portal da Transparência devem ser baixados para o servidos do TEM-DF.\\
+                            & 2) O parser do TEM-DF deve verificar o arquivo baixado e popular o banco de dados com os dados disponíveis.\\ \midrule
+  Resultados Esperados      & Os dados do Portal da Transparência persistidos no banco de dados do TEM-DF.\\ \midrule
+  Situações de Erros        & Impossibilidade de baixar o arquivos de escalas dos médicos do Portal da Transparência do DF.\\ \midrule
+  Notas                     & NA                              \\ \bottomrule
+\end{longtable}
+
+\begin{longtable}{p{4cm}>{-- }p{9cm}}
+  \caption{Caso de Teste 5 - Aprovar Comentários}\label{tab:ct5} \\
+  \toprule
+  \noindent
+  CT-5                      & Aprovar Comentários\\ \midrule
+  Importância               & Baixa\\ \midrule
+  Propósito                 & Verificar se é possível remover( administrador ) comentários feitos pelos usuários.\\ \midrule
+  Pré-condições             & O administrador deve estar logado no sistema.\\ \midrule
+  Dados de entrada do teste & Comentários dos usuários a serem avaliados.\\ \midrule
+  Passos                    & 1) O administrador faz login no sistema.\\
+                            & 2) O administrador escolhe a opção de ver comentários realizados.\\
+                            & 3) O administrador avalia o comentário, podendo escolher a opção de remover comentário.\\ \midrule
+  Resultados Esperados      & Se o comentário for removido, este deverá ser excluído do site do TEM-DF.\\ \midrule
+  Situações de Erros        & NA\\ \midrule
+  Notas                     & NA                              \\ \bottomrule
+\end{longtable}
 
 \end{anexosenv}
