@@ -1,0 +1,128 @@
+% Definindo novas cores
+\definecolor{verde}{rgb}{0,0.5,0}
+% Configurando layout para mostrar codigos C++
+\lstset{
+  language=C++,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  stringstyle=\color{verde},
+  commentstyle=\color{red},
+  extendedchars=true,
+  showspaces=false,
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny,
+  breaklines=true,
+  backgroundcolor=\color{green!10},
+  breakautoindent=true,
+  captionpos=b,
+  xleftmargin=0pt,
+}
+\pagestyle{empty}
+
+\section{Processo de configuração da Ferramenta de IC}
+
+Como proposto nos objetivos específicos do trabalho, foi aplicada uma ferramenta de integração contínua ao projeto TEM-DF. Essa seção tem como objetivo relatar os passos, bem como
+explicar cada um deles para o devido funcionamento da ferramenta em qualquer projeto.
+
+\subsection{Configuração do Lado Github}
+
+Primeir acesse a página de acesso aos tokens do \href{https://github.com/settings/tokens}{Github.}%
+\footnote{https://github.com/settings/tokens}
+Nela é possível gerar um novo token de acesso para permitir o Travis IC ter acesso ao repositório. Nas opções de permissão é necessário apenas dar permissão de acesso público ao Travis. Para isso selecione a opção (public\_repo) e gere o token.
+
+\subsection{Configuração do Lado Travis}
+
+Como o TEM-DF é um projeto em Ruby on Rails, utilizou-se uma gem para facilitar na configuração. Para isso utilizou-se o comando a seguir:
+
+\begin{lstlisting}
+$ gem install travis
+\end{lstlisting}
+
+Após instalar a gem é necessário criptografar o token gerado pelo Github para poder adicioná-lo no arquivo de configurações do Travis, o arquivo .travis.yml. Para isso foi executado o seguinte comando:
+
+\begin{lstlisting}
+$ travis encrypt -r user/repo 'GITHUB_SECRET_TOKEN='
+\end{lstlisting}
+
+Com o resultado deste comando, o token criptografado foi adicionado ao arquivo .travis.yml.
+
+Também foi adicionado o caminho do script, que pode ser consultado na figura \ref{fig:sc1}, utilizado para realizar a integração automática do código. Como pode ser visto na linha 10 da figura \ref{fig:yml}. Esse script então é baixado pelo Travis e na linha 11 ele é transformado em um arquivo executável dentro do diretório /tmp.
+
+A última configuração necessária foi informar ao travis as condições nas quais a integração contínua deveria agir.
+
+Então configurou se uma expressão regular informando quais os casos em que o CI irá rodar, na variável BRANCHES\_TO\_MERGE\_REGEX, com o valor vazio, ou seja, rodar em todas as branchs.
+
+Após isso, informou se em qual branch as mudanças, após atender aos critérios, irão se integradas. No caso do projeto TEM-DF a branch master.
+
+Em seguida define se para qual repositório as integrações serão enviadas, na variável GITHUB\_REPO.
+
+E por fim, onde devem ficar os arquivos temporários enquanto a IC estiver rodando. Sendo assim o arquivo .travis.yml ficou da seguinte forma:
+
+Após ativar a permissão do Travis no \href{https://travis-ci.org}{endereço.}%
+\footnote{https://travis-ci.org}
+A integração contínua está pronta e devidamente configurada.
+
+\begin{figure}[!ht]
+  \caption{Arquivo .travis.yml}
+  \label{fig:yml}
+
+\begin{lstlisting}
+language: ruby
+rvm:
+- 2.1.9
+script:
+- bundle exec rake test
+env:
+  global:
+    secure: "Token criptografado gerado no comando anterior"
+after_success:
+  - "curl -o /tmp/travis-automerge https://raw.githubusercontent.com/cdown/travis-automerge/master/travis-automerge"
+  - "chmod a+x /tmp/travis-automerge"
+  - "BRANCHES_TO_MERGE_REGEX='' BRANCH_TO_MERGE_INTO=master GITHUB_REPO=VeV-2016-1/TEM-DF /tmp/travis-automerge"
+\end{lstlisting}
+\end{figure}
+
+
+\begin{figure}[!ht]
+  \caption{Script bash linux para auto merge.}
+  \label{fig:sc1}
+
+  \begin{lstlisting}
+#!/bin/bash -e
+
+: "${BRANCHES_TO_MERGE_REGEX?}" "${BRANCH_TO_MERGE_INTO?}"
+: "${GITHUB_SECRET_TOKEN?}" "${GITHUB_REPO?}"
+
+export GIT_COMMITTER_EMAIL='travis@travis'
+export GIT_COMMITTER_NAME='Travis CI'
+
+if ! grep -q "$BRANCHES_TO_MERGE_REGEX" <<< "$TRAVIS_BRANCH"; then
+    printf "Current branch %s doesn't match regex %s, exiting\\n" \
+        "$TRAVIS_BRANCH" "$BRANCHES_TO_MERGE_REGEX" >&2
+    exit 0
+fi
+
+# Since Travis does a partial checkout, we need to get the whole thing
+repo_temp=$(mktemp -d)
+git clone "https://github.com/$GITHUB_REPO" "$repo_temp"
+
+# shellcheck disable=SC2164
+cd "$repo_temp"
+
+printf 'Checking out %s\n' "$BRANCH_TO_MERGE_INTO" >&2
+git checkout "$BRANCH_TO_MERGE_INTO"
+
+printf 'Merging %s\n' "$TRAVIS_COMMIT" >&2
+git merge --ff-only "$TRAVIS_COMMIT"
+
+printf 'Pushing to %s\n' "$GITHUB_REPO" >&2
+
+push_uri="https://$GITHUB_SECRET_TOKEN@github.com/$GITHUB_REPO"
+
+# Redirect to /dev/null to avoid secret leakage
+git push "$push_uri" "$BRANCH_TO_MERGE_INTO" >/dev/null 2>&1
+git push "$push_uri" :"$TRAVIS_BRANCH" >/dev/null 2>&1
+  \end{lstlisting}
+
+\end{figure}
